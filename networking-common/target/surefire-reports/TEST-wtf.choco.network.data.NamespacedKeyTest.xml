@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="wtf.choco.network.data.NamespacedKeyTest" time="0.097" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="D:\Users\hawke\Eclipse-workspaces\workspace\networking\networking-common\target\test-classes;D:\Users\hawke\Eclipse-workspaces\workspace\networking\networking-common\target\classes;D:\Users\hawke\.m2\repository\org\jetbrains\annotations\24.1.0\annotations-24.1.0.jar;D:\Users\hawke\.m2\repository\com\google\guava\guava\33.0.0-jre\guava-33.0.0-jre.jar;D:\Users\hawke\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;D:\Users\hawke\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;D:\Users\hawke\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;D:\Users\hawke\.m2\repository\org\checkerframework\checker-qual\3.41.0\checker-qual-3.41.0.jar;D:\Users\hawke\.m2\repository\com\google\errorprone\error_prone_annotations\2.23.0\error_prone_annotations-2.23.0.jar;D:\Users\hawke\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;D:\Users\hawke\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;D:\Users\hawke\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;D:\Users\hawke\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;D:\Users\hawke\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;D:\Users\hawke\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;D:\Users\hawke\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="java.vm.vendor" value="Eclipse Adoptium"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptium.net/"/>
+    <property name="user.timezone" value="America/Toronto"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="CA"/>
+    <property name="sun.boot.library.path" value="D:\Program Files\Java\jdk-17.0.8.1+1\bin"/>
+    <property name="sun.java.command" value="C:\Users\hawke\AppData\Local\Temp\surefire7409395517573617211\surefirebooter-20240131141958334_3.jar C:\Users\hawke\AppData\Local\Temp\surefire7409395517573617211 2024-01-31T14-19-58_172-jvmRun1 surefire-20240131141958334_1tmp surefire_0-20240131141958334_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\Users\hawke\Eclipse-workspaces\workspace\networking\networking-common\target\test-classes;D:\Users\hawke\Eclipse-workspaces\workspace\networking\networking-common\target\classes;D:\Users\hawke\.m2\repository\org\jetbrains\annotations\24.1.0\annotations-24.1.0.jar;D:\Users\hawke\.m2\repository\com\google\guava\guava\33.0.0-jre\guava-33.0.0-jre.jar;D:\Users\hawke\.m2\repository\com\google\guava\failureaccess\1.0.2\failureaccess-1.0.2.jar;D:\Users\hawke\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;D:\Users\hawke\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;D:\Users\hawke\.m2\repository\org\checkerframework\checker-qual\3.41.0\checker-qual-3.41.0.jar;D:\Users\hawke\.m2\repository\com\google\errorprone\error_prone_annotations\2.23.0\error_prone_annotations-2.23.0.jar;D:\Users\hawke\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;D:\Users\hawke\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.1\junit-jupiter-api-5.10.1.jar;D:\Users\hawke\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;D:\Users\hawke\.m2\repository\org\junit\platform\junit-platform-commons\1.10.1\junit-platform-commons-1.10.1.jar;D:\Users\hawke\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;D:\Users\hawke\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.1\junit-jupiter-engine-5.10.1.jar;D:\Users\hawke\.m2\repository\org\junit\platform\junit-platform-engine\1.10.1\junit-platform-engine-1.10.1.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\hawke"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2023-08-24"/>
+    <property name="java.home" value="D:\Program Files\Java\jdk-17.0.8.1+1"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\Users\hawke\Eclipse-workspaces\workspace\networking\networking-common"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\hawke\AppData\Local\Temp\surefire7409395517573617211\surefirebooter-20240131141958334_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="17.0.8.1+1"/>
+    <property name="user.name" value="hawke"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Temurin-17.0.8.1+1"/>
+    <property name="localRepository" value="D:\Users\hawke\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/adoptium/adoptium-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\hawke\AppData\Local\Temp\"/>
+    <property name="java.version" value="17.0.8.1"/>
+    <property name="user.dir" value="D:\Users\hawke\Eclipse-workspaces\workspace\networking\networking-common"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="D:\Program Files\Java\jdk-17.0.8.1+1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Users\hawke\bin;D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\local\bin;D:\Program Files\Git\usr\bin;D:\Program Files\Git\usr\bin;D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\bin;C:\Users\hawke\bin;D:\Program Files\Java\jdk-21\bin\server;D:\Program Files\Java\jdk-21\bin;D:\Program Files\Java\jdk-17.0.8.1+1\bin;D:\Program Files\Maven\apache-maven-3.9.4\bin;D:\Program Files\Gradle\gradle-8.4\bin;D:\Program Files\Git\usr\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\hawke\AppData\Local\Microsoft\WindowsApps;D:\Users\hawke\eclipse\java-latest;D:\Program Files\Git\usr\bin\vendor_perl;D:\Program Files\Git\usr\bin\core_perl;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Eclipse Adoptium"/>
+    <property name="java.vm.version" value="17.0.8.1+1"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="testOf" classname="wtf.choco.network.data.NamespacedKeyTest" time="0.05"/>
+  <testcase name="testEquals" classname="wtf.choco.network.data.NamespacedKeyTest" time="0.014"/>
+  <testcase name="testMinecraft" classname="wtf.choco.network.data.NamespacedKeyTest" time="0.002"/>
+  <testcase name="testFromString" classname="wtf.choco.network.data.NamespacedKeyTest" time="0.001"/>
+  <testcase name="testNamespacedKey" classname="wtf.choco.network.data.NamespacedKeyTest" time="0.004"/>
+</testsuite>

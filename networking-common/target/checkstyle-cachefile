@@ -1,0 +1,18 @@
+#Tue Jan 30 18:39:58 EST 2024
+configuration*?=7DF082773E8A76696C60225613F62011DDC3E7FA
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\data\\ProtocolData.java=1706472123366
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\MessageRegistry.java=1706649126391
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\listener\\ClientboundMessageListener.java=1706472329533
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\listener\\ServerboundMessageListener.java=1706472339979
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\receiver\\ProxiedMessageReceiverRegistry.java=1706472575945
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\MessageByteBuffer.java=1706657955936
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\Message.java=1706649213686
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\MessageDirection.java=1706459125175
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\ProtocolConfiguration.java=1706490470239
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\receiver\\MessageReceiver.java=1706461313808
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\MessageProtocol.java=1706657982347
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\ChannelRegistrar.java=1706649213740
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\listener\\MessageListener.java=1706472306550
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\data\\NamespacedKey.java=1706472274996
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\data\\CustomProtocolDataRegistry.java=1706492142626
+D\:\\Users\\hawke\\Eclipse-workspaces\\workspace\\networking\\networking-common\\src\\main\\java\\wtf\\choco\\network\\receiver\\ProxiedMessageReceiver.java=1706472389383
