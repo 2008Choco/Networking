@@ -108,7 +108,7 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
 
     /**
      * Called when a message was received from a client and successfully deserialized. This
-     * method is expected not to <italic>handle</italic> the message, but rather return the
+     * method is expected not to <em>handle</em> the message, but rather return the
      * {@link ServerboundMessageListener} instance responsible for handling the message that
      * was received. The listener method to invoke when handling the message should be determined
      * by the {@link Message} implementation itself in its {@link Message#handle(MessageListener)}
