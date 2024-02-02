@@ -21,6 +21,6 @@ jobs:
 
     - name: Deploy with Maven
       run: mvn -B deploy
-	  env:
-	    MAVEN_USERNAME: ${{ secrets.REPOSITORY_USERNAME }}
-	    MAVEN_PASSWORD: ${{ secrets.REPOSITORY_PASSWORD }}
+      env:
+        MAVEN_USERNAME: ${{ secrets.REPOSITORY_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.REPOSITORY_PASSWORD }}
