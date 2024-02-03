@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "networking-fabric",
+  "version": "${version}",
+  "name": "networking-fabric",
+  "authors": [ "Choco" ],
+  "license": "MIT",
+
+  "environment": "*",
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17"
+  }
+}

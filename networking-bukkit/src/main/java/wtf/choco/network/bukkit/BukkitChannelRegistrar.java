@@ -114,7 +114,7 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
      * by the {@link Message} implementation itself in its {@link Message#handle(MessageListener)}
      * method.
      * <p>
-     * For example, say we have a {@literal Map<Player, ServerboundMessageListener} in our plugin
+     * For example, say we have a {@literal Map<UUID, MyServerboundMessageListener} in our plugin
      * class that maps players to their respective message listener. This method should return the
      * value associated with the sender.
      * <pre>
@@ -132,8 +132,8 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
      * // Your BukkitChannelRegistrar implementation
      * public final class MyChannelRegistrar extends {@literal BukkitChannelRegistrar<MyPlugin, MyServerboundMessageListener, MyClientboundMessageListener>} {
      *
-     *     public MyChannelRegistrar(MyPlugin plugin) {
-     *         super(plugin);
+     *     public MyChannelRegistrar(MyPlugin plugin, {@literal MessageProtocol<S, C>} protocol) {
+     *         super(plugin, protocol);
      *     }
      *
      *     protected MyServerboundMessageListener onSuccessfulMessage(Player player, String channel, {@literal Message<MyServerboundMessageListener>} message) {
