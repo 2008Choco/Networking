@@ -1,5 +1,7 @@
 package wtf.choco.network.fabric;
 
+import com.google.common.base.Preconditions;
+
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
@@ -45,7 +47,10 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param registerClientboundReceiver whether or not to register a clientbound message receiver
      * @param registerServerboundReceiver whether or not to register a serverbound message receiver
      */
-    public FabricChannelRegistrar(MessageProtocol<S, C> protocol, Logger logger, boolean registerClientboundReceiver, boolean registerServerboundReceiver) {
+    public FabricChannelRegistrar(@NotNull MessageProtocol<S, C> protocol, @NotNull Logger logger, boolean registerClientboundReceiver, boolean registerServerboundReceiver) {
+        Preconditions.checkArgument(protocol != null, "protocol must not be null");
+        Preconditions.checkArgument(logger != null, "logger must not be null");
+
         this.protocol = protocol;
         this.logger = logger;
         this.registerClientboundReceiver = registerClientboundReceiver;
@@ -60,7 +65,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param logger the logger to use when printing warnings or errors
      * @param client true if on the client, false if on the server
      */
-    public FabricChannelRegistrar(MessageProtocol<S, C> protocol, Logger logger, boolean client) {
+    public FabricChannelRegistrar(@NotNull MessageProtocol<S, C> protocol, @NotNull Logger logger, boolean client) {
         this(protocol, logger, client, !client);
     }
 
@@ -132,7 +137,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message (including the message id)
      * @param messageId the message id that was read from the message data
      */
-    protected void onUnknownClientboundMessage(@NotNull ResourceLocation channel, byte[] data, int messageId) {
+    protected void onUnknownClientboundMessage(@NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) {
         this.logger.warn("Received unknown packet with id " + messageId + " from server on channel \"" + channel + "\". Ignoring.");
     }
 
@@ -146,7 +151,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message (including the message id)
      * @param messageId the message id that was read from the message data
      */
-    protected void onUnknownServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte[] data, int messageId) {
+    protected void onUnknownServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) {
         this.logger.warn("Received unknown packet with id " + messageId + " from " + sender.getName().getString() + " on channel \"" + channel + "\". Ignoring.");
     }
 
@@ -158,7 +163,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message
      * @param e the exception that was thrown
      */
-    protected void onClientboundMessageReadException(@NotNull ResourceLocation channel, byte[] data, @NotNull Throwable e) {
+    protected void onClientboundMessageReadException(@NotNull ResourceLocation channel, byte @NotNull [] data, @NotNull Throwable e) {
         this.logger.warn("Failed to read message sent from server on channel \"" + channel + "\". Received erroneous data.");
         e.printStackTrace();
     }
@@ -173,7 +178,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message
      * @param e the exception that was thrown
      */
-    protected void onServerboundMessageReadException(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte[] data, @NotNull Throwable e) {
+    protected void onServerboundMessageReadException(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte @NotNull [] data, @NotNull Throwable e) {
         this.logger.warn("Failed to read message sent by " + sender.getName().getString() + " on channel \"" + channel + "\". Received erroneous data.");
         e.printStackTrace();
     }

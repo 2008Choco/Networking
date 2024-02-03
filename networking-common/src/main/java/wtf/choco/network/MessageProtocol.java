@@ -211,6 +211,7 @@ public final class MessageProtocol<S extends ServerboundMessageListener, C exten
      *
      * @return this instance. Allows for chained method calls
      */
+    @NotNull
     public MessageProtocol<S, C> configure(@NotNull ProtocolConfiguration configuration) {
         Preconditions.checkArgument(configuration != null, "configuration must not be null");
 

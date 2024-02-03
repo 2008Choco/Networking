@@ -50,7 +50,7 @@ public final class ProxiedMessageReceiverRegistry {
      * @throws UnsupportedOperationException if there is no known proxy types for the
      * given type
      */
-    public <T> void sendMessage(T receiver, NamespacedKey channel, byte[] data) {
+    public <T> void sendMessage(@NotNull T receiver, @NotNull NamespacedKey channel, byte @NotNull [] data) {
         Preconditions.checkArgument(receiver != null, "receiver must not be null");
         Preconditions.checkArgument(channel != null, "key must not be null");
         Preconditions.checkArgument(data != null, "data must not be null");
@@ -59,6 +59,7 @@ public final class ProxiedMessageReceiverRegistry {
     }
 
     @SuppressWarnings("unchecked")
+    @NotNull
     private <T> ProxiedMessageReceiver<T> findProxiedType(@NotNull Class<?> type) {
         // Try to find the type directly first
         ProxiedMessageReceiver<?> receiver = proxies.get(type);

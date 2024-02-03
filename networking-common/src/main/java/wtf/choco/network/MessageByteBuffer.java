@@ -329,7 +329,8 @@ public class MessageByteBuffer {
      *
      * @return the read UUID
      */
-    @NotNull public UUID readUUID() {
+    @NotNull
+    public UUID readUUID() {
         this.ensureReading();
         return new UUID(readLong(), readLong());
     }
@@ -341,7 +342,7 @@ public class MessageByteBuffer {
      * @param <E> the enumerated type
      * @param value the enum value to write
      */
-    public <E extends Enum<E>> void writeEnum(E value) {
+    public <E extends Enum<E>> void writeEnum(@NotNull E value) {
         this.ensureWriting();
 
         Preconditions.checkArgument(value != null, "value must not be null");
@@ -361,7 +362,8 @@ public class MessageByteBuffer {
      * @throws ArrayIndexOutOfBoundsException if the enum ordinal that was read does
      * not fit within the universe of the provided enum type
      */
-    @NotNull public <E extends Enum<E>> E readEnum(@NotNull Class<E> enumClass) {
+    @NotNull
+    public <E extends Enum<E>> E readEnum(@NotNull Class<E> enumClass) {
         Preconditions.checkArgument(enumClass != null, "enumClass must not be null");
         return enumClass.getEnumConstants()[readVarInt()];
     }
@@ -398,7 +400,7 @@ public class MessageByteBuffer {
      *
      * @return the byte array
      */
-    public byte[] readByteArray() {
+    public byte @NotNull [] readByteArray() {
         this.ensureReading();
 
         int size = readVarInt();
@@ -413,7 +415,7 @@ public class MessageByteBuffer {
      *
      * @return the bytes
      */
-    public byte[] readBytes() {
+    public byte @NotNull [] readBytes() {
         this.ensureReading();
         return readBytes(inputBuffer.remaining());
     }
@@ -425,7 +427,7 @@ public class MessageByteBuffer {
      *
      * @return the bytes
      */
-    public byte[] readBytes(int size) {
+    public byte @NotNull [] readBytes(int size) {
         this.ensureReading();
 
         byte[] bytes = new byte[size];
@@ -510,7 +512,8 @@ public class MessageByteBuffer {
      * @see MessageProtocol#registerCustomDataType(Class, BiConsumer, Function)
      * @see MessageProtocol#registerCustomDataType(Class, Function)
      */
-    public <T> T read(Class<T> type) {
+    @NotNull
+    public <T> T read(@NotNull Class<T> type) {
         this.ensureReading();
         return protocol.customProtocolDataRegistry.deserialize(this, type);
     }
@@ -520,7 +523,7 @@ public class MessageByteBuffer {
      *
      * @return the byte array
      */
-    public byte[] asByteArray() {
+    public byte @NotNull [] asByteArray() {
         this.ensureWriting();
         return outputStream.toByteArray();
     }

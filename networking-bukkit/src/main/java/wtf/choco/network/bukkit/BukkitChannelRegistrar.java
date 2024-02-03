@@ -86,7 +86,7 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
      * @param data the raw byte data payload from the message (including the message id)
      * @param messageId the message id that was read from the message data
      */
-    protected void onUnknownMessage(Player sender, String channel, byte[] data, int messageId) {
+    protected void onUnknownMessage(@NotNull Player sender, @NotNull String channel, byte @NotNull [] data, int messageId) {
         sender.kickPlayer("Received unrecognized packet with id " + messageId + " (" + channel + "). Contact an administrator!");
         this.plugin.getLogger().warning("Received unknown packet sent by " + sender.getName() + " on channel \"" + channel + "\".");
     }
@@ -100,7 +100,7 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
      * @param data the raw byte data payload from the message
      * @param e the exception that was thrown
      */
-    protected void onMessageReadException(Player sender, String channel, byte[] data, Throwable e) {
+    protected void onMessageReadException(@NotNull Player sender, @NotNull String channel, byte @NotNull [] data, Throwable e) {
         sender.kickPlayer("Malformed or invalid packet (" + channel + "). Contact an administrator!\nReason: " + e.getMessage());
         this.plugin.getLogger().warning("Failed to read message sent by " + sender.getName() + " on channel \"" + channel + "\". Received erroneous data.");
         e.printStackTrace();
@@ -163,6 +163,6 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
      * null if the message should not be handled
      */
     @Nullable
-    protected abstract S onSuccessfulMessage(Player player, String channel, Message<S> message);
+    protected abstract S onSuccessfulMessage(@NotNull Player player, @NotNull String channel, @NotNull Message<S> message);
 
 }

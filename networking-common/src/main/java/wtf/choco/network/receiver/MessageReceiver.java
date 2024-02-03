@@ -16,6 +16,6 @@ public interface MessageReceiver {
      * @param channel the channel on which the message should be sent
      * @param message the message bytes to be sent
      */
-    public void sendMessage(@NotNull NamespacedKey channel, byte[] message);
+    public void sendMessage(@NotNull NamespacedKey channel, byte @NotNull [] message);
 
 }

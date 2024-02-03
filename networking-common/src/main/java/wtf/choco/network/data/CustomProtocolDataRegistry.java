@@ -111,6 +111,7 @@ public final class CustomProtocolDataRegistry {
      * @throws UnsupportedOperationException if there is no known means of deserializing the
      * given type
      */
+    @NotNull
     public <T> T deserialize(@NotNull MessageByteBuffer buffer, @NotNull Class<T> type) {
         Preconditions.checkArgument(buffer != null, "buffer must not be null");
         Preconditions.checkArgument(type != null, "type must not be null");
@@ -119,6 +120,7 @@ public final class CustomProtocolDataRegistry {
     }
 
     @SuppressWarnings("unchecked")
+    @NotNull
     private <T> SerializationStrategy<T> findSerializationStrategy(@NotNull Class<?> type, @NotNull String serializeOrDeserialize) {
         // Try to find the type directly first
         SerializationStrategy<?> strategy = serializers.get(type);

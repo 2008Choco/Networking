@@ -3,6 +3,7 @@ package wtf.choco.network.data;
 import com.google.common.base.Preconditions;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import wtf.choco.network.MessageByteBuffer;
 
@@ -133,7 +134,7 @@ public record NamespacedKey(@NotNull String namespace, @NotNull String key) impl
         return isValidNamespaceChar(character) || character == '/';
     }
 
-    private static boolean isValidNamespace(String namespace) {
+    private static boolean isValidNamespace(@Nullable String namespace) {
         if (namespace == null) {
             return false;
         }
@@ -152,7 +153,7 @@ public record NamespacedKey(@NotNull String namespace, @NotNull String key) impl
         return true;
     }
 
-    private static boolean isValidKey(String key) {
+    private static boolean isValidKey(@Nullable String key) {
         if (key == null) {
             return false;
         }
