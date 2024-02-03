@@ -58,7 +58,7 @@ subprojects {
         repositories {
             maven {
                 isAllowInsecureProtocol = true
-                val repository = if (rootProject.version.toString().endsWith("SNAPSHOT")) "snapshots" else "releases"
+                val repository = if (project.version.toString().endsWith("SNAPSHOT")) "snapshots" else "releases"
                 url = uri("http://repo.choco.wtf/$repository")
 
                 credentials {
