@@ -136,6 +136,7 @@ public abstract class BukkitChannelRegistrar<P extends Plugin, S extends Serverb
      *         super(plugin, protocol);
      *     }
      *
+     *     {@literal @Override}
      *     protected MyServerboundMessageListener onSuccessfulMessage(Player player, String channel, {@literal Message<MyServerboundMessageListener>} message) {
      *         return plugin.getMessageListener(player); // That's it. The BukkitChannelRegistrar will handle the listening
      *     }

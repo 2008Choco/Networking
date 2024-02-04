@@ -208,6 +208,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      *         super(protocol, logger, true); // true = on the client
      *     }
      *
+     *     {@literal @Override}
      *     protected MyClientboundMessageListener onSuccessfulClientboundMessage(ResourceLocation channel, {@literal Message<MyClientboundMessageListener>} message) {
      *         return MyMod.MESSAGE_LISTENER; // That's it. The FabricChannelRegistrar will handle the listening
      *     }
