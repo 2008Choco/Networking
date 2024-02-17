@@ -1,5 +1,6 @@
 plugins {
     id("fabric-loom") version "1.5-SNAPSHOT"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 repositories {
@@ -8,6 +9,7 @@ repositories {
 
 dependencies {
     api(project(":networking-common"))
+    shadow(project(":networking-common"))
 
     minecraft("com.mojang:minecraft:${property("minecraft_version")}")
     mappings(loom.officialMojangMappings())
@@ -23,5 +25,20 @@ tasks {
             expand(getProperties())
             expand(mutableMapOf("version" to project.version))
         }
+    }
+
+    shadowJar {
+        configurations = listOf(project.configurations["shadow"])
+        exclude("META-INF")
+
+        dependencies {
+            include(project(":networking-common"))
+        }
+    }
+
+    remapJar {
+        dependsOn("shadowJar")
+        mustRunAfter("shadowJar")
+        inputFile.set(shadowJar.get().archiveFile)
     }
 }
