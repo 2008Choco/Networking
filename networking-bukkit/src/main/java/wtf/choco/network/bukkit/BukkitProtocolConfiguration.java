@@ -80,30 +80,30 @@ public class BukkitProtocolConfiguration implements ProtocolConfiguration {
         protocol.registerCustomDataType(NamespacedKey.class, this::writeNamespacedKey, this::readNamespacedKey);
 
         // Registry-backed Keyed types
-        this.registerKeyed(protocol, Advancement.class, () -> Registry.ADVANCEMENT);
-        this.registerKeyed(protocol, Art.class, () -> Registry.ART);
-        this.registerKeyed(protocol, Biome.class, () -> Registry.BIOME);
-        this.registerKeyed(protocol, Cat.Type.class, () -> Registry.CAT_VARIANT);
-        this.registerKeyed(protocol, Enchantment.class, () -> Registry.ENCHANTMENT);
-        this.registerKeyed(protocol, EntityType.class, () -> Registry.ENTITY_TYPE);
-        this.registerKeyed(protocol, Fluid.class, () -> Registry.FLUID);
-        this.registerKeyed(protocol, Frog.Variant.class, () -> Registry.FROG_VARIANT);
-        this.registerKeyed(protocol, GameEvent.class, () -> Registry.GAME_EVENT);
-        this.registerKeyed(protocol, LootTables.class, () -> Registry.LOOT_TABLES);
-        this.registerKeyed(protocol, Material.class, () -> Registry.MATERIAL);
-        this.registerKeyed(protocol, MusicInstrument.class, () -> Registry.INSTRUMENT);
-        this.registerKeyed(protocol, Particle.class, () -> Registry.PARTICLE_TYPE);
-        this.registerKeyed(protocol, PatternType.class, () -> Registry.BANNER_PATTERN);
-        this.registerKeyed(protocol, PotionEffectType.class, () -> Registry.EFFECT);
-        this.registerKeyed(protocol, PotionType.class, () -> Registry.POTION);
-        this.registerKeyed(protocol, Sound.class, () -> Registry.SOUNDS);
-        this.registerKeyed(protocol, Statistic.class, () -> Registry.STATISTIC);
-        this.registerKeyed(protocol, Structure.class, () -> Registry.STRUCTURE);
-        this.registerKeyed(protocol, StructureType.class, () -> Registry.STRUCTURE_TYPE);
-        this.registerKeyed(protocol, TrimMaterial.class, () -> Registry.TRIM_MATERIAL);
-        this.registerKeyed(protocol, TrimPattern.class, () -> Registry.TRIM_PATTERN);
-        this.registerKeyed(protocol, Villager.Profession.class, () -> Registry.VILLAGER_PROFESSION);
-        this.registerKeyed(protocol, Villager.Type.class, () -> Registry.VILLAGER_TYPE);
+        this.registerKeyed(protocol, () -> Advancement.class, () -> Registry.ADVANCEMENT);
+        this.registerKeyed(protocol, () -> Art.class, () -> Registry.ART);
+        this.registerKeyed(protocol, () -> Biome.class, () -> Registry.BIOME);
+        this.registerKeyed(protocol, () -> Cat.Type.class, () -> Registry.CAT_VARIANT);
+        this.registerKeyed(protocol, () -> Enchantment.class, () -> Registry.ENCHANTMENT);
+        this.registerKeyed(protocol, () -> EntityType.class, () -> Registry.ENTITY_TYPE);
+        this.registerKeyed(protocol, () -> Fluid.class, () -> Registry.FLUID);
+        this.registerKeyed(protocol, () -> Frog.Variant.class, () -> Registry.FROG_VARIANT);
+        this.registerKeyed(protocol, () -> GameEvent.class, () -> Registry.GAME_EVENT);
+        this.registerKeyed(protocol, () -> LootTables.class, () -> Registry.LOOT_TABLES);
+        this.registerKeyed(protocol, () -> Material.class, () -> Registry.MATERIAL);
+        this.registerKeyed(protocol, () -> MusicInstrument.class, () -> Registry.INSTRUMENT);
+        this.registerKeyed(protocol, () -> Particle.class, () -> Registry.PARTICLE_TYPE);
+        this.registerKeyed(protocol, () -> PatternType.class, () -> Registry.BANNER_PATTERN);
+        this.registerKeyed(protocol, () -> PotionEffectType.class, () -> Registry.EFFECT);
+        this.registerKeyed(protocol, () -> PotionType.class, () -> Registry.POTION);
+        this.registerKeyed(protocol, () -> Sound.class, () -> Registry.SOUNDS);
+        this.registerKeyed(protocol, () -> Statistic.class, () -> Registry.STATISTIC);
+        this.registerKeyed(protocol, () -> Structure.class, () -> Registry.STRUCTURE);
+        this.registerKeyed(protocol, () -> StructureType.class, () -> Registry.STRUCTURE_TYPE);
+        this.registerKeyed(protocol, () -> TrimMaterial.class, () -> Registry.TRIM_MATERIAL);
+        this.registerKeyed(protocol, () -> TrimPattern.class, () -> Registry.TRIM_PATTERN);
+        this.registerKeyed(protocol, () -> Villager.Profession.class, () -> Registry.VILLAGER_PROFESSION);
+        this.registerKeyed(protocol, () -> Villager.Type.class, () -> Registry.VILLAGER_TYPE);
     }
 
     private void writeVector(Vector vector, MessageByteBuffer buffer) {
@@ -143,8 +143,9 @@ public class BukkitProtocolConfiguration implements ProtocolConfiguration {
     }
 
     // Using a Supplier<Registry<T>> because VeinMiner, the primary user of this library, supports 1.17.x where some of these registries do not exist
-    private <T extends Keyed> void registerKeyed(MessageProtocol<?, ?> protocol, Class<T> type, Supplier<Registry<T>> registrySupplier) {
+    private <T extends Keyed> void registerKeyed(MessageProtocol<?, ?> protocol, Supplier<Class<T>> typeSupplier, Supplier<Registry<T>> registrySupplier) {
         try {
+            Class<T> type = typeSupplier.get();
             Registry<T> registry = registrySupplier.get();
             protocol.registerCustomDataType(type, this::writeKeyed, buffer -> readRegistered(buffer, registry));
         } catch (Throwable ignore) { }
