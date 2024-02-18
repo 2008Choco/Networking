@@ -10,7 +10,7 @@ subprojects {
     apply(plugin = "maven-publish")
 
     group = "wtf.choco"
-    version = "0.0.2-SNAPSHOT"
+    version = "0.0.2"
 
     java {
         toolchain {
