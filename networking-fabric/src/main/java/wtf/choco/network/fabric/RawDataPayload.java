@@ -20,6 +20,11 @@ public final class RawDataPayload implements CustomPacketPayload {
 
     private static CustomPacketPayload.Type<RawDataPayload> type;
 
+    /*
+     * NOTE: This doesn't support more than one MessageProtocol definition.
+     * VeinMiner only uses one definition. If any one else uses more than one definition, please try to make this better!
+     * Probably a Map<NamespacedKey, CustomPacketPayload.Type<RawDataPayload>>? But it would have to pull that key from SOMEWHERE. I don't know...
+     */
     @ApiStatus.Internal
     static void setType(@NotNull CustomPacketPayload.Type<RawDataPayload> type) {
         RawDataPayload.type = type;
