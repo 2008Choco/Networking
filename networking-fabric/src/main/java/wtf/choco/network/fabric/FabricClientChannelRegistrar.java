@@ -38,7 +38,9 @@ public abstract class FabricClientChannelRegistrar<S extends ServerboundMessageL
 
     // Overriding and finalizing serverbound methods
     @Override
-    public final void registerServerboundMessageHandler(@NotNull NamespacedKey channel, @NotNull MessageRegistry<S> registry) { }
+    public final void registerServerboundMessageHandler(@NotNull NamespacedKey channel, @NotNull MessageRegistry<S> registry) {
+        this.registerServerboundPayload(channel);
+    }
 
     @Override
     protected final void onUnknownServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) { }

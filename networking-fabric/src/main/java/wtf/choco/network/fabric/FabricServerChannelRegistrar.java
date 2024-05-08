@@ -38,7 +38,9 @@ public abstract class FabricServerChannelRegistrar<S extends ServerboundMessageL
 
     // Overriding and finalizing clientbound methods
     @Override
-    public final void registerClientboundMessageHandler(@NotNull NamespacedKey channel, @NotNull MessageRegistry<C> registry) { }
+    public final void registerClientboundMessageHandler(@NotNull NamespacedKey channel, @NotNull MessageRegistry<C> registry) {
+        this.registerClientboundPayload(channel);
+    }
 
     @Override
     protected final void onUnknownClientboundMessage(@NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) { }

@@ -3,7 +3,6 @@ package wtf.choco.network.fabric;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import wtf.choco.network.MessageProtocol;
 import wtf.choco.network.ProtocolConfiguration;
-import wtf.choco.network.data.NamespacedKey;
 
 /**
  * A {@link ProtocolConfiguration} implementation for Fabric-based clients and servers
@@ -77,7 +75,7 @@ public class FabricProtocolConfiguration implements ProtocolConfiguration {
                 return;
             }
 
-            this.sendMessageToServerPlayer(serverPlayer, channel, message);
+            this.sendMessageToServerPlayer(serverPlayer, message);
         });
 
         protocol.registerProxiedReceiver(Level.class, (receiver, channel, message) -> {
@@ -86,19 +84,19 @@ public class FabricProtocolConfiguration implements ProtocolConfiguration {
                     return;
                 }
 
-                this.sendMessageToServerPlayer(serverPlayer, channel, message);
+                this.sendMessageToServerPlayer(serverPlayer, message);
             });
         });
 
         protocol.registerProxiedReceiver(MinecraftServer.class, (receiver, channel, message) -> {
-            receiver.getPlayerList().getPlayers().forEach(player -> sendMessageToServerPlayer(player, channel, message));
+            receiver.getPlayerList().getPlayers().forEach(player -> sendMessageToServerPlayer(player, message));
         });
     }
 
-    private void sendMessageToServerPlayer(ServerPlayer player, NamespacedKey channel, byte[] message) {
+    private void sendMessageToServerPlayer(ServerPlayer player, byte[] message) {
         FriendlyByteBuf byteBuf = PacketByteBufs.create();
         byteBuf.writeBytes(message);
-        ServerPlayNetworking.send(player, new ResourceLocation(channel.namespace(), channel.key()), byteBuf);
+        ServerPlayNetworking.send(player, new RawDataPayload(byteBuf.array()));
     }
 
 }

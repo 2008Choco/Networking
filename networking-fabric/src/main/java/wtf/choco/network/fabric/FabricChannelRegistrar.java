@@ -3,7 +3,9 @@ package wtf.choco.network.fabric;
 import com.google.common.base.Preconditions;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,13 +73,15 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
 
     @Override
     public void registerClientboundMessageHandler(@NotNull NamespacedKey channel, @NotNull MessageRegistry<C> registry) {
+        var payloadType = registerClientboundPayload(channel);
+
         if (!registerClientboundReceiver) {
             return;
         }
 
         ResourceLocation channelKey = new ResourceLocation(channel.namespace(), channel.key());
-        ClientPlayNetworking.registerGlobalReceiver(channelKey, (client, handler, buf, responseSender) -> {
-            MessageByteBuffer buffer = new MessageByteBuffer(protocol, buf.nioBuffer());
+        ClientPlayNetworking.registerGlobalReceiver(payloadType, (payload, context) -> {
+            MessageByteBuffer buffer = new MessageByteBuffer(protocol, payload.data());
 
             try {
                 int messageId = buffer.readVarInt();
@@ -85,7 +89,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
 
                 // Ignore any unknown messages
                 if (message == null) {
-                    this.onUnknownClientboundMessage(channelKey, buf.array(), messageId);
+                    this.onUnknownClientboundMessage(channelKey, payload.data(), messageId);
                     return;
                 }
 
@@ -94,20 +98,24 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
                     message.handle(listener);
                 }
             } catch (Exception e) {
-                this.onClientboundMessageReadException(channelKey, buf.array(), e);
+                this.onClientboundMessageReadException(channelKey, payload.data(), e);
             }
         });
     }
 
     @Override
     public void registerServerboundMessageHandler(@NotNull NamespacedKey channel, @NotNull MessageRegistry<S> registry) {
+        var payloadType = registerServerboundPayload(channel);
+
         if (!registerServerboundReceiver) {
             return;
         }
 
         ResourceLocation channelKey = new ResourceLocation(channel.namespace(), channel.key());
-        ServerPlayNetworking.registerGlobalReceiver(channelKey, (server, player, handler, buf, responseSender) -> {
-            MessageByteBuffer buffer = new MessageByteBuffer(protocol, buf.nioBuffer());
+        ServerPlayNetworking.registerGlobalReceiver(payloadType, (payload, context) -> {
+            MessageByteBuffer buffer = new MessageByteBuffer(protocol, payload.data());
+
+            ServerPlayer player = context.player();
 
             try {
                 int messageId = buffer.readVarInt();
@@ -115,16 +123,16 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
 
                 // Ignore any unknown messages
                 if (message == null) {
-                    this.onUnknownServerboundMessage(server, player, channelKey, buf.array(), messageId);
+                    this.onUnknownServerboundMessage(player.server, player, channelKey, payload.data(), messageId);
                     return;
                 }
 
-                S listener = onSuccessfulServerboundMessage(server, player, channelKey, message);
+                S listener = onSuccessfulServerboundMessage(player.server, player, channelKey, message);
                 if (listener != null) {
                     message.handle(listener);
                 }
             } catch (Exception e) {
-                this.onServerboundMessageReadException(server, player, channelKey, buf.array(), e);
+                this.onServerboundMessageReadException(player.server, player, channelKey, payload.data(), e);
             }
         });
     }
@@ -301,6 +309,26 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
     protected S onSuccessfulServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull ResourceLocation channel, @NotNull Message<S> message) {
         this.logger.info("Received message from " + player.getName().getString() + " (" + message.getClass().getName() + ") but it was not handled. Did you override onSuccessfulServerboundMessage()?");
         return null;
+    }
+
+    private CustomPacketPayload.Type<RawDataPayload> initTypeIfNecessary(NamespacedKey channel) {
+        CustomPacketPayload.Type<RawDataPayload> type = RawDataPayload.getType();
+        if (type == null) {
+            RawDataPayload.setType(type = CustomPacketPayload.createType(channel.toString()));
+        }
+        return type;
+    }
+
+    protected CustomPacketPayload.Type<RawDataPayload> registerClientboundPayload(NamespacedKey channel) {
+        var payloadType = initTypeIfNecessary(channel);
+        PayloadTypeRegistry.playS2C().register(payloadType, RawDataPayload.CODEC);
+        return payloadType;
+    }
+
+    protected CustomPacketPayload.Type<RawDataPayload> registerServerboundPayload(NamespacedKey channel) {
+        var payloadType = initTypeIfNecessary(channel);
+        PayloadTypeRegistry.playC2S().register(payloadType, RawDataPayload.CODEC);
+        return payloadType;
     }
 
 }

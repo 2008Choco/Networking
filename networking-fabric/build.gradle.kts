@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom") version "1.5-SNAPSHOT"
+    id("fabric-loom") version "1.6-SNAPSHOT"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -18,7 +18,21 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+
+    withJavadocJar()
+    withSourcesJar()
+}
+
 tasks {
+    withType<JavaCompile> {
+       options.release = 21
+       options.encoding = Charsets.UTF_8.name()
+    }
+
     processResources {
         inputs.property("version", project.version)
         filesMatching("fabric.mod.json") {
