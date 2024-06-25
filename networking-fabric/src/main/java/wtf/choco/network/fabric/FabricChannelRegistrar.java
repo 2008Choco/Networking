@@ -79,7 +79,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
             return;
         }
 
-        ResourceLocation channelKey = new ResourceLocation(channel.namespace(), channel.key());
+        ResourceLocation channelKey = ResourceLocation.fromNamespaceAndPath(channel.namespace(), channel.key());
         ClientPlayNetworking.registerGlobalReceiver(payloadType, (payload, context) -> {
             MessageByteBuffer buffer = new MessageByteBuffer(protocol, payload.data());
 
@@ -111,7 +111,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
             return;
         }
 
-        ResourceLocation channelKey = new ResourceLocation(channel.namespace(), channel.key());
+        ResourceLocation channelKey = ResourceLocation.fromNamespaceAndPath(channel.namespace(), channel.key());
         ServerPlayNetworking.registerGlobalReceiver(payloadType, (payload, context) -> {
             MessageByteBuffer buffer = new MessageByteBuffer(protocol, payload.data());
 
@@ -314,7 +314,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
     private CustomPacketPayload.Type<RawDataPayload> initTypeIfNecessary(NamespacedKey channel) {
         CustomPacketPayload.Type<RawDataPayload> type = RawDataPayload.getType();
         if (type == null) {
-            RawDataPayload.setType(type = CustomPacketPayload.createType(channel.toString()));
+            RawDataPayload.setType(type = new CustomPacketPayload.Type<>(ResourceLocation.parse(channel.toString())));
         }
         return type;
     }
