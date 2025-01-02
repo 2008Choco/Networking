@@ -15,7 +15,7 @@ Support for Forge and NeoForge are planned. Sponge is not planned, but feel free
 <repositories>
     <repository>
         <id>choco-repo</id>
-        <url>http://repo.choco.wtf/releases</url>
+        <url>https://repo.choco.wtf/releases</url>
     </repository>
 </repositories>
 
@@ -31,7 +31,7 @@ Support for Forge and NeoForge are planned. Sponge is not planned, but feel free
 **Gradle (Groovy):**
 ```groovy
 repositories {
-    maven { url = "http://repo.choco.wtf/releases"; allowInsecureProtocol = true }
+    maven { url = "https://repo.choco.wtf/releases" }
 }
 
 dependencies {
@@ -42,7 +42,7 @@ dependencies {
 **Gradle (Kotlin DSL):**
 ```kotlin
 repositories {
-    maven { url = "http://repo.choco.wtf/releases"; allowInsecureProtocol = true }
+    maven { url = "https://repo.choco.wtf/releases" }
 }
 
 dependencies {
