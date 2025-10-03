@@ -123,16 +123,16 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
 
                 // Ignore any unknown messages
                 if (message == null) {
-                    this.onUnknownServerboundMessage(player.server, player, channelKey, payload.data(), messageId);
+                    this.onUnknownServerboundMessage(context.server(), player, channelKey, payload.data(), messageId);
                     return;
                 }
 
-                S listener = onSuccessfulServerboundMessage(player.server, player, channelKey, message);
+                S listener = onSuccessfulServerboundMessage(context.server(), player, channelKey, message);
                 if (listener != null) {
                     message.handle(listener);
                 }
             } catch (Exception e) {
-                this.onServerboundMessageReadException(player.server, player, channelKey, payload.data(), e);
+                this.onServerboundMessageReadException(context.server(), player, channelKey, payload.data(), e);
             }
         });
     }
