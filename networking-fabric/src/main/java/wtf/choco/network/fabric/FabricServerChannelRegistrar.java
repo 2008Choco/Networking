@@ -1,6 +1,6 @@
 package wtf.choco.network.fabric;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -26,9 +26,9 @@ import wtf.choco.network.listener.ServerboundMessageListener;
  * @param <S> the serverbound message listener type
  * @param <C> the clientbound message listener type
  *
- * @see #onUnknownServerboundMessage(MinecraftServer, ServerPlayer, ResourceLocation, byte[], int)
- * @see #onServerboundMessageReadException(MinecraftServer, ServerPlayer, ResourceLocation, byte[], Throwable)
- * @see #onSuccessfulMessage(MinecraftServer, ServerPlayer, ResourceLocation, Message)
+ * @see #onUnknownServerboundMessage(MinecraftServer, ServerPlayer, Identifier, byte[], int)
+ * @see #onServerboundMessageReadException(MinecraftServer, ServerPlayer, Identifier, byte[], Throwable)
+ * @see #onSuccessfulMessage(MinecraftServer, ServerPlayer, Identifier, Message)
  */
 public abstract class FabricServerChannelRegistrar<S extends ServerboundMessageListener, C extends ClientboundMessageListener> extends FabricChannelRegistrar<S, C> {
 
@@ -43,21 +43,21 @@ public abstract class FabricServerChannelRegistrar<S extends ServerboundMessageL
     }
 
     @Override
-    protected final void onUnknownClientboundMessage(@NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) { }
+    protected final void onUnknownClientboundMessage(@NotNull Identifier channel, byte @NotNull [] data, int messageId) { }
 
     @Override
-    protected final void onClientboundMessageReadException(@NotNull ResourceLocation channel, byte @NotNull [] data, @NotNull Throwable e) { }
+    protected final void onClientboundMessageReadException(@NotNull Identifier channel, byte @NotNull [] data, @NotNull Throwable e) { }
 
     @Nullable
     @Override
-    protected final C onSuccessfulClientboundMessage(@NotNull ResourceLocation channel, @NotNull Message<C> message) {
+    protected final C onSuccessfulClientboundMessage(@NotNull Identifier channel, @NotNull Message<C> message) {
         return null;
     }
 
     // Deferring onSuccesfulServerboundMessage() to an abstract onSuccessfulMessage()
     @Nullable
     @Override
-    protected final S onSuccessfulServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull ResourceLocation channel, @NotNull Message<S> message) {
+    protected final S onSuccessfulServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull Identifier channel, @NotNull Message<S> message) {
         return onSuccessfulMessage(server, player, channel, message);
     }
 
@@ -92,7 +92,7 @@ public abstract class FabricServerChannelRegistrar<S extends ServerboundMessageL
      *     }
      *
      *     {@literal @Override}
-     *     protected MyServerboundMessageListener onSuccessfulMessage(MinecraftServer server, ServerPlayer player, ResourceLocation channel, {@literal Message<MyServerboundMessageListener>} message) {
+     *     protected MyServerboundMessageListener onSuccessfulMessage(MinecraftServer server, ServerPlayer player, Identifier channel, {@literal Message<MyServerboundMessageListener>} message) {
      *         return MyMod.getInstance().getMessageListener(player); // That's it. The FabricChannelRegistrar will handle the listening
      *     }
      *
@@ -120,6 +120,6 @@ public abstract class FabricServerChannelRegistrar<S extends ServerboundMessageL
      * null if the message should not be handled
      */
     @Nullable
-    protected abstract S onSuccessfulMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull ResourceLocation channel, @NotNull Message<S> message);
+    protected abstract S onSuccessfulMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull Identifier channel, @NotNull Message<S> message);
 
 }

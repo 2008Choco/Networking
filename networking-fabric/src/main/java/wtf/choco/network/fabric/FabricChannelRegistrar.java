@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -30,12 +30,12 @@ import wtf.choco.network.listener.ServerboundMessageListener;
  * @param <S> the serverbound message listener type
  * @param <C> the clientbound message listener type
  *
- * @see #onUnknownClientboundMessage(ResourceLocation, byte[], int)
- * @see #onUnknownServerboundMessage(MinecraftServer, ServerPlayer, ResourceLocation, byte[], int)
- * @see #onClientboundMessageReadException(ResourceLocation, byte[], Throwable)
- * @see #onServerboundMessageReadException(MinecraftServer, ServerPlayer, ResourceLocation, byte[], Throwable)
- * @see #onSuccessfulClientboundMessage(ResourceLocation, Message)
- * @see #onSuccessfulServerboundMessage(MinecraftServer, ServerPlayer, ResourceLocation, Message)
+ * @see #onUnknownClientboundMessage(Identifier, byte[], int)
+ * @see #onUnknownServerboundMessage(MinecraftServer, ServerPlayer, Identifier, byte[], int)
+ * @see #onClientboundMessageReadException(Identifier, byte[], Throwable)
+ * @see #onServerboundMessageReadException(MinecraftServer, ServerPlayer, Identifier, byte[], Throwable)
+ * @see #onSuccessfulClientboundMessage(Identifier, Message)
+ * @see #onSuccessfulServerboundMessage(MinecraftServer, ServerPlayer, Identifier, Message)
  */
 public abstract class FabricChannelRegistrar<S extends ServerboundMessageListener, C extends ClientboundMessageListener> implements ChannelRegistrar<S, C> {
 
@@ -79,7 +79,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
             return;
         }
 
-        ResourceLocation channelKey = ResourceLocation.fromNamespaceAndPath(channel.namespace(), channel.key());
+        Identifier channelKey = Identifier.fromNamespaceAndPath(channel.namespace(), channel.key());
         ClientPlayNetworking.registerGlobalReceiver(payloadType, (payload, context) -> {
             MessageByteBuffer buffer = new MessageByteBuffer(protocol, payload.data());
 
@@ -111,7 +111,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
             return;
         }
 
-        ResourceLocation channelKey = ResourceLocation.fromNamespaceAndPath(channel.namespace(), channel.key());
+        Identifier channelKey = Identifier.fromNamespaceAndPath(channel.namespace(), channel.key());
         ServerPlayNetworking.registerGlobalReceiver(payloadType, (payload, context) -> {
             MessageByteBuffer buffer = new MessageByteBuffer(protocol, payload.data());
 
@@ -145,7 +145,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message (including the message id)
      * @param messageId the message id that was read from the message data
      */
-    protected void onUnknownClientboundMessage(@NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) {
+    protected void onUnknownClientboundMessage(@NotNull Identifier channel, byte @NotNull [] data, int messageId) {
         this.logger.warn("Received unknown packet with id " + messageId + " from server on channel \"" + channel + "\". Ignoring.");
     }
 
@@ -159,7 +159,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message (including the message id)
      * @param messageId the message id that was read from the message data
      */
-    protected void onUnknownServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte @NotNull [] data, int messageId) {
+    protected void onUnknownServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull Identifier channel, byte @NotNull [] data, int messageId) {
         this.logger.warn("Received unknown packet with id " + messageId + " from " + sender.getName().getString() + " on channel \"" + channel + "\". Ignoring.");
     }
 
@@ -171,7 +171,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message
      * @param e the exception that was thrown
      */
-    protected void onClientboundMessageReadException(@NotNull ResourceLocation channel, byte @NotNull [] data, @NotNull Throwable e) {
+    protected void onClientboundMessageReadException(@NotNull Identifier channel, byte @NotNull [] data, @NotNull Throwable e) {
         this.logger.warn("Failed to read message sent from server on channel \"" + channel + "\". Received erroneous data.");
         e.printStackTrace();
     }
@@ -186,7 +186,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * @param data the raw byte data payload from the message
      * @param e the exception that was thrown
      */
-    protected void onServerboundMessageReadException(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull ResourceLocation channel, byte @NotNull [] data, @NotNull Throwable e) {
+    protected void onServerboundMessageReadException(@NotNull MinecraftServer server, @NotNull ServerPlayer sender, @NotNull Identifier channel, byte @NotNull [] data, @NotNull Throwable e) {
         this.logger.warn("Failed to read message sent by " + sender.getName().getString() + " on channel \"" + channel + "\". Received erroneous data.");
         e.printStackTrace();
     }
@@ -217,7 +217,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      *     }
      *
      *     {@literal @Override}
-     *     protected MyClientboundMessageListener onSuccessfulClientboundMessage(ResourceLocation channel, {@literal Message<MyClientboundMessageListener>} message) {
+     *     protected MyClientboundMessageListener onSuccessfulClientboundMessage(Identifier channel, {@literal Message<MyClientboundMessageListener>} message) {
      *         return MyMod.MESSAGE_LISTENER; // That's it. The FabricChannelRegistrar will handle the listening
      *     }
      *
@@ -243,7 +243,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * null if the message should not be handled
      */
     @Nullable
-    protected C onSuccessfulClientboundMessage(@NotNull ResourceLocation channel, @NotNull Message<C> message) {
+    protected C onSuccessfulClientboundMessage(@NotNull Identifier channel, @NotNull Message<C> message) {
         this.logger.info("Received message from server (" + message.getClass().getName() + ") but it was not handled. Did you override onSuccessfulClientboundMessage()?");
         return null;
     }
@@ -278,7 +278,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      *         super(protocol, logger, false); // false = on the server
      *     }
      *
-     *     protected MyServerboundMessageListener onSuccessfulServerboundMessage(MinecraftServer server, ServerPlayer player, ResourceLocation channel, {@literal Message<MyServerboundMessageListener>} message) {
+     *     protected MyServerboundMessageListener onSuccessfulServerboundMessage(MinecraftServer server, ServerPlayer player, Identifier channel, {@literal Message<MyServerboundMessageListener>} message) {
      *         return MyMod.getInstance().getMessageListener(player); // That's it. The FabricChannelRegistrar will handle the listening
      *     }
      *
@@ -306,7 +306,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
      * null if the message should not be handled
      */
     @Nullable
-    protected S onSuccessfulServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull ResourceLocation channel, @NotNull Message<S> message) {
+    protected S onSuccessfulServerboundMessage(@NotNull MinecraftServer server, @NotNull ServerPlayer player, @NotNull Identifier channel, @NotNull Message<S> message) {
         this.logger.info("Received message from " + player.getName().getString() + " (" + message.getClass().getName() + ") but it was not handled. Did you override onSuccessfulServerboundMessage()?");
         return null;
     }
@@ -314,7 +314,7 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
     private CustomPacketPayload.Type<RawDataPayload> initTypeIfNecessary(NamespacedKey channel) {
         CustomPacketPayload.Type<RawDataPayload> type = RawDataPayload.getType();
         if (type == null) {
-            RawDataPayload.setType(type = new CustomPacketPayload.Type<>(ResourceLocation.parse(channel.toString())));
+            RawDataPayload.setType(type = new CustomPacketPayload.Type<>(Identifier.parse(channel.toString())));
         }
         return type;
     }
