@@ -1,7 +1,6 @@
 package wtf.choco.network.fabric;
 
 import com.google.common.base.Preconditions;
-
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -9,11 +8,9 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
 import wtf.choco.network.ChannelRegistrar;
 import wtf.choco.network.Message;
 import wtf.choco.network.MessageByteBuffer;
@@ -321,13 +318,13 @@ public abstract class FabricChannelRegistrar<S extends ServerboundMessageListene
 
     protected CustomPacketPayload.Type<RawDataPayload> registerClientboundPayload(NamespacedKey channel) {
         var payloadType = initTypeIfNecessary(channel);
-        PayloadTypeRegistry.playS2C().register(payloadType, RawDataPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(payloadType, RawDataPayload.CODEC);
         return payloadType;
     }
 
     protected CustomPacketPayload.Type<RawDataPayload> registerServerboundPayload(NamespacedKey channel) {
         var payloadType = initTypeIfNecessary(channel);
-        PayloadTypeRegistry.playC2S().register(payloadType, RawDataPayload.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(payloadType, RawDataPayload.CODEC);
         return payloadType;
     }
 

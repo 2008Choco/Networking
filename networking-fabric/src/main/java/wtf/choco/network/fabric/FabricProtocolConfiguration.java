@@ -1,15 +1,13 @@
 package wtf.choco.network.fabric;
 
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.FriendlyByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-
 import org.jetbrains.annotations.NotNull;
-
 import wtf.choco.network.MessageProtocol;
 import wtf.choco.network.ProtocolConfiguration;
 
@@ -94,7 +92,7 @@ public class FabricProtocolConfiguration implements ProtocolConfiguration {
     }
 
     private void sendMessageToServerPlayer(ServerPlayer player, byte[] message) {
-        FriendlyByteBuf byteBuf = PacketByteBufs.create();
+        FriendlyByteBuf byteBuf = FriendlyByteBufs.create();
         byteBuf.writeBytes(message);
         ServerPlayNetworking.send(player, new RawDataPayload(byteBuf.array()));
     }

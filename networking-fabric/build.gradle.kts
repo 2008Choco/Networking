@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom") version "1.13-SNAPSHOT"
+    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT"
     id("com.gradleup.shadow") version "9.2.0"
 }
 
@@ -12,15 +12,14 @@ dependencies {
     shadow(project(":networking-common"))
 
     minecraft("com.mojang:minecraft:${property("minecraft_version")}")
-    mappings(loom.officialMojangMappings())
 
-    modImplementation("net.fabricmc:fabric-loader:${property("loader_version")}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
+    implementation("net.fabricmc:fabric-loader:${property("loader_version")}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
 }
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(25))
     }
 
     withJavadocJar()
@@ -29,7 +28,7 @@ java {
 
 tasks {
     withType<JavaCompile> {
-       options.release = 21
+       options.release = 25
        options.encoding = Charsets.UTF_8.name()
     }
 
@@ -50,9 +49,8 @@ tasks {
         }
     }
 
-    remapJar {
+    jar {
         dependsOn("shadowJar")
         mustRunAfter("shadowJar")
-        inputFile.set(shadowJar.get().archiveFile)
     }
 }

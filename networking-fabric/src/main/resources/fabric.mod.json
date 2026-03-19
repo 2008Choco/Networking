@@ -10,8 +10,8 @@
 
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric-api": ">=0.97",
+    "fabric-api": ">=0.143",
     "minecraft": ">=${minecraft_version}",
-    "java": ">=17"
+    "java": ">=25"
   }
 }

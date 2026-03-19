@@ -3,11 +3,9 @@ package wtf.choco.network.fabric;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
-
 import wtf.choco.network.ChannelRegistrar;
 import wtf.choco.network.Message;
 import wtf.choco.network.MessageProtocol;
